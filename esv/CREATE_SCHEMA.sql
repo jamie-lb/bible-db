@@ -1,3 +1,10 @@
+create table versions (
+    version_code varchar primary key,
+    version_name varchar not null
+);
+
+insert into versions(version_code, version_name) values('ESV', 'English Standard Version');
+
 create table testaments(
     id serial primary key,
     description varchar
@@ -81,8 +88,10 @@ insert into books(title, testament_id) values('Revelation', 2);
 
 create table verses (
     id serial primary key,
+    version_code varchar not null references versions(version_code),
     verse_text varchar not null,
     book_id int not null references books(id),
     chapter_number int not null,
-    verse_number int not null
+    verse_number int not null,
+    constraint uk_verses_address unique (version_code, book_id, chapter_number, verse_number)
 );
