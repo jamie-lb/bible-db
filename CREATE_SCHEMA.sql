@@ -95,3 +95,39 @@ create table verses (
     verse_number int not null,
     constraint uk_verses_address unique (version_code, book_id, chapter_number, verse_number)
 );
+
+create table reading_plans (
+    id serial primary key,
+    plan_name varchar not null,
+    plan_length_days int not null,
+    version_code varchar not null references versions(version_code)
+);
+
+create table reading_plan_books (
+    plan_id int not null references reading_plans(id),
+    book_id int not null references books(id),
+    repeat_number int not null default 1,
+    constraint reading_plan_books_pk primary key (plan_id, book_id)
+);
+
+create table scheduled_plans (
+    id serial primary key,
+    plan_id int not null references reading_plans(id),
+    start_date timestamp not null,
+    end_date timestamp not null,
+    active boolean not null
+);
+
+create table daily_readings (
+    id serial primary key,
+    schedule_id int not null references scheduled_plans(id),
+    day_number int not null,
+    planned_date timestamp not null
+);
+
+create table daily_reading_verses (
+    reading_id int not null references daily_readings(id),
+    verse_id int not null references verses(id),
+    constraint daily_reading_verse_pk primary key (reading_id, verse_id)
+);
+
