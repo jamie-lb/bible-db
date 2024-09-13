@@ -106,8 +106,8 @@ create table reading_plans (
 create table reading_plan_books (
     plan_id int not null references reading_plans(id),
     book_id int not null references books(id),
-    repeat_number int not null default 1,
-    constraint reading_plan_books_pk primary key (plan_id, book_id)
+    sequence int not null,
+    constraint reading_plan_books_pk primary key (plan_id, book_id, sequence)
 );
 
 create table scheduled_plans (
