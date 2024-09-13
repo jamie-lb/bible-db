@@ -96,8 +96,18 @@ create table verses (
     constraint uk_verses_address unique (version_code, book_id, chapter_number, verse_number)
 );
 
+create table reading_plan_types (
+    plan_type_code varchar primary key,
+    plan_type_description varchar not null,
+    constraint reading_plan_type_description_uk UNIQUE (plan_type_description)
+);
+
+insert into reading_plan_types(plan_type_code, plan_type_description) values('EQUAL_SPACING', 'Equally Spaced');
+insert into reading_plan_types(plan_type_code, plan_type_description) values('CHAPTER_PER_DAY', 'One Chapter Per Day');
+
 create table reading_plans (
     id serial primary key,
+    plan_type_code varchar not null references reading_plan_types(plan_type_code),
     plan_name varchar not null,
     plan_length_days int not null,
     version_code varchar not null references versions(version_code)
