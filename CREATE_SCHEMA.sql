@@ -102,7 +102,7 @@ create table reading_plan_types (
     constraint reading_plan_type_description_uk UNIQUE (plan_type_description)
 );
 
-insert into reading_plan_types(plan_type_code, plan_type_description) values('EQUAL_SPACING', 'Equally Spaced');
+insert into reading_plan_types(plan_type_code, plan_type_description) values('EQUALLY_SPACED', 'Equally Spaced');
 insert into reading_plan_types(plan_type_code, plan_type_description) values('CHAPTER_PER_DAY', 'One Chapter Per Day');
 
 create table reading_plans (
